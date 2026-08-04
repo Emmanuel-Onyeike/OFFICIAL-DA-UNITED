@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home · DA United</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/app.css">
+  <link rel="stylesheet" href="/css/settings.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../script/supabase-client.js"></script>
+</head>
+<body class="app-body">
+  <aside class="app-sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-logo">
+        <img src="../img/logo.png" alt="DA United"
+          onerror="this.style.display='none'; this.nextElementSibling.classList.add('is-visible');">
+        <span class="sidebar-brand-fallback">DA</span>
+      </div>
+      <div>
+        <div class="sidebar-brand-text">DA United</div>
+        <div class="sidebar-brand-sub">Official app</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">Main</div>
+      <a href="dashboard.html" ><i class="fas fa-home"></i> Home</a>
+      <a href="squad.html" ><i class="fas fa-users"></i> Squad</a>
+      <a href="fixtures.html" ><i class="fas fa-calendar-alt"></i> Fixtures</a>
+      <a href="matches.html" ><i class="fas fa-futbol"></i> Matches</a>
+      <a href="live.html" ><i class="fas fa-broadcast-tower"></i> Live</a>
+      <a href="goals.html" ><i class="fas fa-chart-line"></i> Goals & Assists</a>     
+      <a href="news.html" ><i class="fas fa-newspaper"></i> News</a>
+      <a href="datv.html" ><i class="fas fa-tv"></i> DATV</a>
+      <a href="prediction.html" ><i class="fas fa-bullseye"></i> Predictions</a>
+      <a href="training.html" ><i class="fas fa-dumbbell"></i> Training</a>
+        <a href="gallery.html" ><i class="fas fa-images"></i> Gallery</a>
+      <a href="profile.html" ><i class="fas fa-user"></i> Profile</a>
+      <a href="settings.html" class="active"><i class="fas fa-cog"></i> Settings</a>
+      <a href="admin.html"><i class="fas fa-shield-alt"></i> Admin</a>
+    </nav>
+    <div class="sidebar-foot">
+      <a href="welcome.html"><i class="fas fa-sign-out-alt"></i> Exit</a>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="app-topbar">
+      <div>
+        <h1 class="app-topbar-title">Settings</h1>
+        <div class="app-topbar-sub">DA United overview</div>
+      </div>
+    </header>
+
+    <main class="app-content">
+        <!-- Preferences -->
+        <div class="st-card">
+          <h2 class="st-card-title">Preferences</h2>
+          <div class="st-row">
+            <div class="st-row-text">
+              <div class="st-row-label">Match alerts</div>
+              <div class="st-row-desc">Reminders for fixtures and live updates (when enabled on device).</div>
+            </div>
+            <button type="button" class="st-toggle is-on" id="stNotify" aria-pressed="true" aria-label="Toggle notifications">
+              <span class="st-toggle-knob"></span>
+            </button>
+          </div>
+          <div class="st-row">
+            <div class="st-row-text">
+              <div class="st-row-label">Sounds</div>
+              <div class="st-row-desc">In-app sounds for goals and alerts when available.</div>
+            </div>
+            <button type="button" class="st-toggle is-on" id="stSound" aria-pressed="true" aria-label="Toggle sounds">
+              <span class="st-toggle-knob"></span>
+            </button>
+          </div>
+        </div>
+  
+        <!-- Data -->
+        <div class="st-card">
+          <h2 class="st-card-title">Your data</h2>
+          <div class="st-row">
+            <div class="st-row-text">
+              <div class="st-row-label">Clear prediction</div>
+              <div class="st-row-desc">Remove your saved score prediction for the current match.</div>
+            </div>
+            <button type="button" class="st-btn" id="stResetPred">Clear</button>
+          </div>
+          <div class="st-row">
+            <div class="st-row-text">
+              <div class="st-row-label">Reset profile</div>
+              <div class="st-row-desc">Name, bio, and favourite players only.</div>
+            </div>
+            <button type="button" class="st-btn danger" id="stResetProfile">Reset</button>
+          </div>
+        </div>
+  
+        <!-- Account -->
+        <div class="st-card">
+          <h2 class="st-card-title">Account</h2>
+          <div class="st-row">
+            <div class="st-row-text">
+              <div class="st-row-label">Exit app</div>
+              <div class="st-row-desc">Return to the welcome screen.</div>
+            </div>
+            <button type="button" class="st-btn" id="stExit">Exit</button>
+          </div>
+        </div>
+  
+        <!-- About -->
+        <div class="st-card">
+          <h2 class="st-card-title">About</h2>
+          <div class="st-about">
+            <strong>DA United</strong> official app · Season build<br>
+            Fixtures, squad, live, DATV, predictions and more.<br>
+            Version 1.0.0
+          </div>
+        </div>
+  
+        <div class="st-toast" id="stToast" role="status"></div>
+      </main>
+  </div>
+
+  <nav class="mobile-footer" aria-label="Mobile navigation">
+    <a href="squad.html" class="mf-item"><i class="fas fa-users"></i><span>Squad</span></a>
+    <a href="fixtures.html" class="mf-item"><i class="fas fa-calendar-alt"></i><span>Fixtures</span></a>
+    <div class="mf-item mf-home active">
+      <a href="dashboard.html" class="mf-home-btn" aria-label="Home"><i class="fas fa-home"></i></a>
+      <span>Home</span>
+    </div>
+    <a href="settings.html" class="mf-item"><i class="fas fa-cog"></i><span>Settings</span></a>
+    <button type="button" class="mf-item" id="menuOpenBtn" aria-label="Open menu">
+      <i class="fas fa-bars"></i><span>Menu</span>
+    </button>
+  </nav>
+
+  <div class="menu-modal" id="menuModal" aria-hidden="true">
+    <div class="menu-backdrop" id="menuBackdrop"></div>
+    <div class="menu-drawer">
+      <div class="menu-handle"></div>
+      <p class="menu-drawer-title">DIRECTIVES</p>
+      <div class="menu-grid">
+        <a href="dashboard.html"><i class="fas fa-home"></i>Home</a>
+        <a href="squad.html"><i class="fas fa-users"></i>Squad</a>
+        <a href="fixtures.html"><i class="fas fa-calendar-alt"></i>Fixtures</a>
+        <a href="matches.html"><i class="fas fa-futbol"></i>Matches</a>
+        <a href="live.html"><i class="fas fa-broadcast-tower"></i>Live</a>
+        <a href="goals.html"><i class="fas fa-chart-line"></i>Goals & Assists</a>
+        <a href="news.html"><i class="fas fa-newspaper"></i>News</a>
+        <a href="datv.html"><i class="fas fa-tv"></i>DATV</a>
+        <a href="prediction.html"><i class="fas fa-bullseye"></i>Predictions</a>
+        <a href="training.html"><i class="fas fa-dumbbell"></i>Training</a>
+        <a href="gallery.html"><i class="fas fa-images"></i>Gallery</a>
+        <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+        <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+        <a href="admin.html"><i class="fas fa-shield-alt"></i>Admin</a>
+      </div>
+      <button type="button" class="menu-close" id="menuCloseBtn">Close</button>
+    </div>
+  </div>
+
+  <script src="/scripts/app.js"></script>
+  <script src="/scripts/settings.js"></script>
+</body>
+</html>

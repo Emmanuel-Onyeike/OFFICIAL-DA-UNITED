@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DA UNITED | Loading…</title>
+  <link rel="stylesheet" href="css/splash.css">
+</head>
+<body class="splash-body">
+  <!-- Dynamic Background Glow Elements -->
+  <div class="splash-glow splash-glow-primary"></div>
+  <div class="splash-glow splash-glow-secondary"></div>
+
+  <div class="splash-inner">
+    <div class="splash-ring-wrapper">
+      <div class="splash-ring"></div>
+      <div class="splash-ring-pulse"></div>
+    </div>
+    
+    <div class="splash-logo-box">
+      <img src="/img/LOGO.PNG" alt="DA United Club Logo"
+        onerror="this.style.display='none'; document.getElementById('logoFallback').classList.add('is-visible');">
+      <span id="logoFallback" class="splash-fallback">DA</span>
+    </div>
+    
+    <div class="splash-text-group">
+      <h1 class="splash-brand">DA UNITED</h1>
+      <p class="splash-label">THE OFFICIAL WEB OF DA UNITED</p>
+      <div class="splash-loader-bar">
+        <div class="splash-loader-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/scripts/splash.js"></script>
+</body>
+</html>

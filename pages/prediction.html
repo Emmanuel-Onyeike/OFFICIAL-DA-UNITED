@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home · DA United</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/app.css">
+  <link rel="stylesheet" href="/css/predictions.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../script/supabase-client.js"></script>
+</head>
+<body class="app-body">
+  <aside class="app-sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-logo">
+        <img src="../img/logo.png" alt="DA United"
+          onerror="this.style.display='none'; this.nextElementSibling.classList.add('is-visible');">
+        <span class="sidebar-brand-fallback">DA</span>
+      </div>
+      <div>
+        <div class="sidebar-brand-text">DA United</div>
+        <div class="sidebar-brand-sub">Official app</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">Main</div>
+      <a href="dashboard.html" ><i class="fas fa-home"></i> Home</a>
+      <a href="squad.html" ><i class="fas fa-users"></i> Squad</a>
+      <a href="fixtures.html" ><i class="fas fa-calendar-alt"></i> Fixtures</a>
+      <a href="matches.html" ><i class="fas fa-futbol"></i> Matches</a>
+      <a href="live.html" ><i class="fas fa-broadcast-tower"></i> Live</a>
+      <a href="goals.html" ><i class="fas fa-chart-line"></i> Goals & Assists</a>     
+      <a href="news.html" ><i class="fas fa-newspaper"></i> News</a>
+      <a href="datv.html" ><i class="fas fa-tv"></i> DATV</a>
+      <a href="prediction.html" class="active"><i class="fas fa-bullseye"></i> Predictions</a>
+      <a href="training.html"><i class="fas fa-dumbbell"></i> Training</a>
+      <a href="gallery.html"><i class="fas fa-images"></i> Gallery</a>
+      <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+      <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+      <a href="admin.html"><i class="fas fa-shield-alt"></i> Admin</a>
+    </nav>
+    <div class="sidebar-foot">
+      <a href="welcome.html"><i class="fas fa-sign-out-alt"></i> Exit</a>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="app-topbar">
+      <div>
+        <h1 class="app-topbar-title">Predictions</h1>
+        <div class="app-topbar-sub">DA United overview</div>
+      </div>
+    </header>
+
+    <main class="app-content">
+        <!-- No match set -->
+        <div class="pd-empty" id="pdEmpty">
+          <div class="pd-empty-icon"><i class="fas fa-bullseye"></i></div>
+          <h2>No match to predict</h2>
+          <p>When admin adds the next team vs team fixture, you can predict the score and more here.</p>
+        </div>
+  
+        <div class="pd-form-wrap" id="pdFormWrap" hidden>
+          <!-- Match header -->
+          <div class="pd-match-card">
+            <div class="pd-match-label">Next match prediction</div>
+            <div class="pd-match-row">
+              <span class="pd-team" id="pdHomeName">DA United</span>
+              <span class="pd-vs">VS</span>
+              <span class="pd-team" id="pdAwayName">Opponent</span>
+            </div>
+            <div class="pd-match-meta" id="pdMatchMeta"></div>
+          </div>
+  
+          <!-- Score -->
+          <div class="pd-section">
+            <h3><i class="fas fa-futbol"></i> Predict the score</h3>
+            <div class="pd-score-row">
+              <input class="pd-score-input" id="pdHomeScore" type="number" min="0" max="20" inputmode="numeric" placeholder="0">
+              <span class="pd-score-sep">–</span>
+              <input class="pd-score-input" id="pdAwayScore" type="number" min="0" max="20" inputmode="numeric" placeholder="0">
+            </div>
+            <div class="pd-score-labels">
+              <span>DA United</span>
+              <span>Opponent</span>
+            </div>
+          </div>
+  
+          <!-- MOTM -->
+          <div class="pd-section">
+            <h3><i class="fas fa-star"></i> Man of the match</h3>
+            <div class="pd-field">
+              <label for="pdMotm">DA United player</label>
+              <select class="pd-select" id="pdMotm"></select>
+            </div>
+            <p class="pd-no-squad" id="pdNoSquad" hidden>Add players in Squad (Men) first — they appear here automatically.</p>
+          </div>
+  
+          <!-- Goal scorers -->
+          <div class="pd-section">
+            <h3><i class="fas fa-bullseye"></i> Goal scorers</h3>
+            <div class="pd-field">
+              <label for="pdFirstScorer">First goal scorer</label>
+              <select class="pd-select" id="pdFirstScorer"></select>
+            </div>
+            <div class="pd-field">
+              <label for="pdLastScorer">Last goal scorer</label>
+              <select class="pd-select" id="pdLastScorer"></select>
+            </div>
+          </div>
+  
+          <!-- Assists -->
+          <div class="pd-section">
+            <h3><i class="fas fa-hands-helping"></i> Assists</h3>
+            <div class="pd-field">
+              <label>Player &amp; assist count</label>
+              <div class="pd-assist-row">
+                <select class="pd-select" id="pdAssistPlayer"></select>
+                <input class="pd-num" id="pdAssistCount" type="number" min="0" max="10" inputmode="numeric" placeholder="0">
+              </div>
+              <p class="pd-hint">How many assists for that DA United player.</p>
+            </div>
+          </div>
+  
+          <button type="button" class="pd-submit" id="pdSubmit">Save my prediction</button>
+          <div class="pd-saved" id="pdSaved" hidden></div>
+        </div>
+      </main>
+  </div>
+
+  <nav class="mobile-footer" aria-label="Mobile navigation">
+    <a href="squad.html" class="mf-item"><i class="fas fa-users"></i><span>Squad</span></a>
+    <a href="fixtures.html" class="mf-item"><i class="fas fa-calendar-alt"></i><span>Fixtures</span></a>
+    <div class="mf-item mf-home active">
+      <a href="dashboard.html" class="mf-home-btn" aria-label="Home"><i class="fas fa-home"></i></a>
+      <span>Home</span>
+    </div>
+    <a href="settings.html" class="mf-item"><i class="fas fa-cog"></i><span>Settings</span></a>
+    <button type="button" class="mf-item" id="menuOpenBtn" aria-label="Open menu">
+      <i class="fas fa-bars"></i><span>Menu</span>
+    </button>
+  </nav>
+
+  <div class="menu-modal" id="menuModal" aria-hidden="true">
+    <div class="menu-backdrop" id="menuBackdrop"></div>
+    <div class="menu-drawer">
+      <div class="menu-handle"></div>
+      <p class="menu-drawer-title">DIRECTIVES</p>
+      <div class="menu-grid">
+        <a href="dashboard.html"><i class="fas fa-home"></i>Home</a>
+        <a href="squad.html"><i class="fas fa-users"></i>Squad</a>
+        <a href="fixtures.html"><i class="fas fa-calendar-alt"></i>Fixtures</a>
+        <a href="matches.html"><i class="fas fa-futbol"></i>Matches</a>
+        <a href="live.html"><i class="fas fa-broadcast-tower"></i>Live</a>
+        <a href="goals.html"><i class="fas fa-chart-line"></i>Goals & Assists</a>
+        <a href="news.html"><i class="fas fa-newspaper"></i>News</a>
+        <a href="datv.html"><i class="fas fa-tv"></i>DATV</a>
+        <a href="prediction.html"><i class="fas fa-bullseye"></i>Predictions</a>
+        <a href="training.html"><i class="fas fa-dumbbell"></i>Training</a>
+        <a href="gallery.html"><i class="fas fa-images"></i>Gallery</a>
+        <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+        <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+        <a href="admin.html"><i class="fas fa-shield-alt"></i>Admin</a>
+      </div>
+      <button type="button" class="menu-close" id="menuCloseBtn">Close</button>
+    </div>
+  </div>
+
+  <script src="/scripts/app.js"></script>
+  <script src="/scripts/predictions.js"></script>
+</body>
+</html>

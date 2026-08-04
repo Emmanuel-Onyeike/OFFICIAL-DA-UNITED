@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home · DA United</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/app.css">
+ 
+  <link rel="stylesheet" href="/css/squad.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../script/supabase-client.js"></script>
+</head>
+<body class="app-body">
+  <aside class="app-sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-logo">
+        <img src="../img/logo.png" alt="DA United"
+          onerror="this.style.display='none'; this.nextElementSibling.classList.add('is-visible');">
+        <span class="sidebar-brand-fallback">DA</span>
+      </div>
+      <div>
+        <div class="sidebar-brand-text">DA United</div>
+        <div class="sidebar-brand-sub">Official app</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">Main</div>
+      <a href="dashboard.html" ><i class="fas fa-home"></i> Home</a>
+      <a href="squad.html" class="active"><i class="fas fa-users"></i> Squad</a>
+      <a href="fixtures.html"><i class="fas fa-calendar-alt"></i> Fixtures</a>
+      <a href="matches.html"><i class="fas fa-futbol"></i> Matches</a>
+      <a href="live.html"><i class="fas fa-broadcast-tower"></i> Live</a>
+      <a href="goals.html"><i class="fas fa-chart-line"></i> Goals & Assists</a>
+      <a href="news.html"><i class="fas fa-newspaper"></i> News</a>
+      <a href="datv.html"><i class="fas fa-tv"></i> DATV</a>
+      <a href="prediction.html"><i class="fas fa-bullseye"></i> Predictions</a>
+      <a href="training.html"><i class="fas fa-dumbbell"></i> Training</a>
+      <a href="gallery.html"><i class="fas fa-images"></i> Gallery</a>
+      <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+      <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+      <a href="admin.html"><i class="fas fa-shield-alt"></i> Admin</a>
+    </nav>
+    <div class="sidebar-foot">
+      <a href="welcome.html"><i class="fas fa-sign-out-alt"></i> Exit</a>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="app-topbar">
+      <div>
+        <h1 class="app-topbar-title">Squad</h1>
+        <div class="app-topbar-sub">DA United overview</div>
+      </div>
+    </header>
+
+    <main class="app-content">
+        <div class="sq-team-tabs" id="sqTeamTabs">
+          <button type="button" class="sq-team-tab is-active" data-team="men">Men</button>
+          <button type="button" class="sq-team-tab" data-team="women">Women</button>
+          <button type="button" class="sq-team-tab" data-team="u21">Men U21s</button>
+          <button type="button" class="sq-team-tab" data-team="u18">Men U18s</button>
+        </div>
+  
+        <div class="sq-pos-tabs" id="sqPosTabs">
+          <button type="button" class="sq-pos-tab is-active" data-pos="all">All</button>
+          <button type="button" class="sq-pos-tab" data-pos="GK">GK</button>
+          <button type="button" class="sq-pos-tab" data-pos="DEF">DEF</button>
+          <button type="button" class="sq-pos-tab" data-pos="MID">MID</button>
+          <button type="button" class="sq-pos-tab" data-pos="FWD">FWD</button>
+        </div>
+  
+        <div class="sq-empty-global" id="sqEmptyGlobal">
+          <div class="sq-empty-icon"><i class="fas fa-user-slash"></i></div>
+          <h2>No players yet</h2>
+          <p>This squad is empty. Players will appear here when admin adds them.</p>
+        </div>
+  
+        <div id="sqSections" hidden>
+          <section class="sq-section" data-pos-section="GK">
+            <h3 class="sq-section-title">Goalkeepers</h3>
+            <div class="sq-grid" id="sqGridGK"></div>
+            <div class="sq-empty-pos" id="sqEmptyGK">
+              <i class="fas fa-hands"></i>
+              <span>No goalkeepers listed</span>
+            </div>
+          </section>
+  
+          <section class="sq-section" data-pos-section="DEF">
+            <h3 class="sq-section-title">Defenders</h3>
+            <div class="sq-grid" id="sqGridDEF"></div>
+            <div class="sq-empty-pos" id="sqEmptyDEF">
+              <i class="fas fa-shield-alt"></i>
+              <span>No defenders listed</span>
+            </div>
+          </section>
+  
+          <section class="sq-section" data-pos-section="MID">
+            <h3 class="sq-section-title">Midfielders</h3>
+            <div class="sq-grid" id="sqGridMID"></div>
+            <div class="sq-empty-pos" id="sqEmptyMID">
+              <i class="fas fa-running"></i>
+              <span>No midfielders listed</span>
+            </div>
+          </section>
+  
+          <section class="sq-section" data-pos-section="FWD">
+            <h3 class="sq-section-title">Forwards</h3>
+            <div class="sq-grid" id="sqGridFWD"></div>
+            <div class="sq-empty-pos" id="sqEmptyFWD">
+              <i class="fas fa-futbol"></i>
+              <span>No forwards listed</span>
+            </div>
+          </section>
+        </div>
+      </main>
+  </div>
+
+  <nav class="mobile-footer" aria-label="Mobile navigation">
+    <a href="squad.html" class="mf-item"><i class="fas fa-users"></i><span>Squad</span></a>
+    <a href="fixtures.html" class="mf-item"><i class="fas fa-calendar-alt"></i><span>Fixtures</span></a>
+    <div class="mf-item mf-home active">
+      <a href="dashboard.html" class="mf-home-btn" aria-label="Home"><i class="fas fa-home"></i></a>
+      <span>Home</span>
+    </div>
+    <a href="settings.html" class="mf-item"><i class="fas fa-cog"></i><span>Settings</span></a>
+    <button type="button" class="mf-item" id="menuOpenBtn" aria-label="Open menu">
+      <i class="fas fa-bars"></i><span>Menu</span>
+    </button>
+  </nav>
+
+  <div class="menu-modal" id="menuModal" aria-hidden="true">
+    <div class="menu-backdrop" id="menuBackdrop"></div>
+    <div class="menu-drawer">
+      <div class="menu-handle"></div>
+      <p class="menu-drawer-title">DIRECTIVES</p>
+      <div class="menu-grid">
+        <a href="dashboard.html"><i class="fas fa-home"></i>Home</a>
+        <a href="squad.html"><i class="fas fa-users"></i>Squad</a>
+        <a href="fixtures.html"><i class="fas fa-calendar-alt"></i>Fixtures</a>
+        <a href="matches.html"><i class="fas fa-futbol"></i>Matches</a>
+        <a href="live.html"><i class="fas fa-broadcast-tower"></i>Live</a>
+        <a href="goals.html"><i class="fas fa-chart-line"></i>Goals & Assists</a>
+        <a href="news.html"><i class="fas fa-newspaper"></i>News</a>
+        <a href="datv.html"><i class="fas fa-tv"></i>DATV</a>
+        <a href="prediction.html"><i class="fas fa-bullseye"></i>Predictions</a>
+        <a href="training.html"><i class="fas fa-dumbbell"></i>Training</a>
+        <a href="gallery.html"><i class="fas fa-images"></i>Gallery</a>
+        <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+        <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+        <a href="admin.html"><i class="fas fa-shield-alt"></i>Admin</a>
+      </div>
+      <button type="button" class="menu-close" id="menuCloseBtn">Close</button>
+    </div>
+  </div>
+
+  <script src="/scripts/app.js"></script>
+  <script  src="/scripts/squad.js"></script>
+</body>
+</html>

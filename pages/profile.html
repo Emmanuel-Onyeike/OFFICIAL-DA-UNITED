@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home · DA United</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/app.css">
+  <link rel="stylesheet" href="/css/profile.css">
+</head>
+<body class="app-body">
+  <aside class="app-sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-logo">
+        <img src="../img/logo.png" alt="DA United"
+          onerror="this.style.display='none'; this.nextElementSibling.classList.add('is-visible');">
+        <span class="sidebar-brand-fallback">DA</span>
+      </div>
+      <div>
+        <div class="sidebar-brand-text">DA United</div>
+        <div class="sidebar-brand-sub">Official app</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">Main</div>
+      <a href="dashboard.html" ><i class="fas fa-home"></i> Home</a>
+      <a href="squad.html" ><i class="fas fa-users"></i> Squad</a>
+      <a href="fixtures.html" ><i class="fas fa-calendar-alt"></i> Fixtures</a>
+      <a href="matches.html" ><i class="fas fa-futbol"></i> Matches</a>
+      <a href="live.html" ><i class="fas fa-broadcast-tower"></i> Live</a>
+      <a href="goals.html" ><i class="fas fa-chart-line"></i> Goals & Assists</a>     
+      <a href="news.html" ><i class="fas fa-newspaper"></i> News</a>
+      <a href="datv.html" ><i class="fas fa-tv"></i> DATV</a>
+      <a href="prediction.html" ><i class="fas fa-bullseye"></i> Predictions</a>
+      <a href="training.html" ><i class="fas fa-dumbbell"></i> Training</a>
+        <a href="gallery.html" ><i class="fas fa-images"></i> Gallery</a>
+      <a href="profile.html" class="active"><i class="fas fa-user"></i> Profile</a>
+      <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+      <a href="admin.html"><i class="fas fa-shield-alt"></i> Admin</a>
+    </nav>
+    <div class="sidebar-foot">
+      <a href="welcome.html"><i class="fas fa-sign-out-alt"></i> Exit</a>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="app-topbar">
+      <div>
+        <h1 class="app-topbar-title">Profile</h1>
+        <div class="app-topbar-sub">DA United overview</div>
+      </div>
+    </header>
+
+    <main class="app-content">
+        <div class="pf-card">
+          <div class="pf-header">
+            <div class="pf-avatar" id="pfAvatarLetter">D</div>
+            <div class="pf-header-text">
+              <h1 id="pfDisplayName">DA Fan</h1>
+              <p>Your club profile</p>
+            </div>
+          </div>
+  
+          <div class="pf-points">
+            <div class="pf-points-icon"><i class="fas fa-trophy"></i></div>
+            <div>
+              <div class="pf-points-val" id="pfPointsVal">0</div>
+              <div class="pf-points-label">Prediction points</div>
+            </div>
+          </div>
+  
+          <p class="pf-section-title">About you</p>
+          <div class="pf-field">
+            <label for="pfName">Display name</label>
+            <input class="pf-input" id="pfName" type="text" placeholder="Your name" maxlength="40" autocomplete="nickname">
+          </div>
+          <div class="pf-field">
+            <label for="pfBio">Bio (optional)</label>
+            <input class="pf-input" id="pfBio" type="text" placeholder="Supporter since…" maxlength="80">
+          </div>
+          <button type="button" class="pf-btn" id="pfSave">Save profile</button>
+          <div class="pf-msg" id="pfMsg" hidden></div>
+        </div>
+  
+        <div class="pf-card">
+          <p class="pf-section-title">Best real-world player</p>
+          <div class="pf-fav" id="pfWorldFav">
+            <span class="pf-fav-empty">Search and pick your favourite real-world player</span>
+          </div>
+          <div class="pf-search-wrap">
+            <input class="pf-input" id="pfWorldSearch" type="search" placeholder="Search player name…" autocomplete="off">
+            <div class="pf-search-results" id="pfWorldResults"></div>
+          </div>
+        </div>
+  
+        <div class="pf-card">
+          <p class="pf-section-title">Best DA United player</p>
+          <div class="pf-fav" id="pfDaFav">
+            <span class="pf-fav-empty">Search and pick your favourite DA United player</span>
+          </div>
+          <div class="pf-search-wrap">
+            <input class="pf-input" id="pfDaSearch" type="search" placeholder="Search squad…" autocomplete="off">
+            <div class="pf-search-results" id="pfDaResults"></div>
+          </div>
+          <p class="pf-fav-empty" style="margin:0.35rem 0 0;font-size:0.75rem">
+            Players come from Men squad — add them in Squad first.
+          </p>
+        </div>
+      </main>
+  </div>
+
+  <nav class="mobile-footer" aria-label="Mobile navigation">
+    <a href="squad.html" class="mf-item"><i class="fas fa-users"></i><span>Squad</span></a>
+    <a href="fixtures.html" class="mf-item"><i class="fas fa-calendar-alt"></i><span>Fixtures</span></a>
+    <div class="mf-item mf-home active">
+      <a href="dashboard.html" class="mf-home-btn" aria-label="Home"><i class="fas fa-home"></i></a>
+      <span>Home</span>
+    </div>
+    <a href="settings.html" class="mf-item"><i class="fas fa-cog"></i><span>Settings</span></a>
+    <button type="button" class="mf-item" id="menuOpenBtn" aria-label="Open menu">
+      <i class="fas fa-bars"></i><span>Menu</span>
+    </button>
+  </nav>
+
+  <div class="menu-modal" id="menuModal" aria-hidden="true">
+    <div class="menu-backdrop" id="menuBackdrop"></div>
+    <div class="menu-drawer">
+      <div class="menu-handle"></div>
+      <p class="menu-drawer-title">DIRECTIVES</p>
+      <div class="menu-grid">
+        <a href="dashboard.html"><i class="fas fa-home"></i>Home</a>
+        <a href="squad.html"><i class="fas fa-users"></i>Squad</a>
+        <a href="fixtures.html"><i class="fas fa-calendar-alt"></i>Fixtures</a>
+        <a href="matches.html"><i class="fas fa-futbol"></i>Matches</a>
+        <a href="live.html"><i class="fas fa-broadcast-tower"></i>Live</a>
+        <a href="goals.html"><i class="fas fa-chart-line"></i>Goals & Assists</a>
+        <a href="news.html"><i class="fas fa-newspaper"></i>News</a>
+        <a href="datv.html"><i class="fas fa-tv"></i>DATV</a>
+        <a href="prediction.html"><i class="fas fa-bullseye"></i>Predictions</a>
+        <a href="training.html"><i class="fas fa-dumbbell"></i>Training</a>
+        <a href="gallery.html"><i class="fas fa-images"></i>Gallery</a>
+        <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+        <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+        <a href="admin.html"><i class="fas fa-shield-alt"></i>Admin</a>
+      </div>
+      <button type="button" class="menu-close" id="menuCloseBtn">Close</button>
+    </div>
+  </div>
+
+  <script src="/scripts/app.js"></script>
+  <script src="/scripts/profile.js"></script>
+</body>
+</html>

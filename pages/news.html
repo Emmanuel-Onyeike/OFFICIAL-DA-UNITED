@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home · DA United</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/app.css">
+  <link rel="stylesheet" href="/css/news.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../script/supabase-client.js"></script>
+</head>
+<body class="app-body">
+  <aside class="app-sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-logo">
+        <img src="../img/logo.png" alt="DA United"
+          onerror="this.style.display='none'; this.nextElementSibling.classList.add('is-visible');">
+        <span class="sidebar-brand-fallback">DA</span>
+      </div>
+      <div>
+        <div class="sidebar-brand-text">DA United</div>
+        <div class="sidebar-brand-sub">Official app</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">Main</div>
+      <a href="dashboard.html" ><i class="fas fa-home"></i> Home</a>
+      <a href="squad.html" ><i class="fas fa-users"></i> Squad</a>
+      <a href="fixtures.html" ><i class="fas fa-calendar-alt"></i> Fixtures</a>
+      <a href="matches.html" ><i class="fas fa-futbol"></i> Matches</a>
+      <a href="live.html" ><i class="fas fa-broadcast-tower"></i> Live</a>
+      <a href="goals.html" ><i class="fas fa-chart-line"></i> Goals & Assists</a>     
+      <a href="news.html" class="active"><i class="fas fa-newspaper"></i> News</a>
+      <a href="datv.html"><i class="fas fa-tv"></i> DATV</a>
+      <a href="prediction.html"><i class="fas fa-bullseye"></i> Predictions</a>
+      <a href="training.html"><i class="fas fa-dumbbell"></i> Training</a>
+      <a href="gallery.html"><i class="fas fa-images"></i> Gallery</a>
+      <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+      <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+      <a href="admin.html"><i class="fas fa-shield-alt"></i> Admin</a>
+    </nav>
+    <div class="sidebar-foot">
+      <a href="welcome.html"><i class="fas fa-sign-out-alt"></i> Exit</a>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="app-topbar">
+      <div>
+        <h1 class="app-topbar-title">News</h1>
+        <div class="app-topbar-sub">DA United overview</div>
+      </div>
+    </header>
+
+    <main class="app-content">
+        <div class="nw-tabs" id="nwTabs">
+          <button type="button" class="nw-tab is-active" data-cat="transfer">Transfer</button>
+          <button type="button" class="nw-tab" data-cat="loan">Loan</button>
+          <button type="button" class="nw-tab" data-cat="injury">Injury</button>
+          <button type="button" class="nw-tab" data-cat="suspended">Suspended</button>
+          <button type="button" class="nw-tab" data-cat="unavailable">Not available</button>
+        </div>
+  
+        <!-- Transfer -->
+        <div class="nw-panel" data-panel="transfer">
+          <div class="nw-empty" id="nwEmpty-transfer">
+            <div class="nw-empty-icon"><i class="fas fa-exchange-alt"></i></div>
+            <h2>No transfer news</h2>
+            <p>Transfer updates will show here when admin posts them.</p>
+          </div>
+          <div class="nw-list" id="nwList-transfer" hidden></div>
+        </div>
+  
+        <!-- Loan -->
+        <div class="nw-panel" data-panel="loan" hidden>
+          <div class="nw-empty" id="nwEmpty-loan">
+            <div class="nw-empty-icon"><i class="fas fa-handshake"></i></div>
+            <h2>No loan news</h2>
+            <p>Loan updates will show here when admin posts them.</p>
+          </div>
+          <div class="nw-list" id="nwList-loan" hidden></div>
+        </div>
+  
+        <!-- Injury -->
+        <div class="nw-panel" data-panel="injury" hidden>
+          <div class="nw-empty" id="nwEmpty-injury">
+            <div class="nw-empty-icon"><i class="fas fa-briefcase-medical"></i></div>
+            <h2>No injury news</h2>
+            <p>Injury updates will show here when admin posts them.</p>
+          </div>
+          <div class="nw-list" id="nwList-injury" hidden></div>
+        </div>
+  
+        <!-- Suspended -->
+        <div class="nw-panel" data-panel="suspended" hidden>
+          <div class="nw-empty" id="nwEmpty-suspended">
+            <div class="nw-empty-icon"><i class="fas fa-gavel"></i></div>
+            <h2>No suspension news</h2>
+            <p>Suspension updates will show here when admin posts them.</p>
+          </div>
+          <div class="nw-list" id="nwList-suspended" hidden></div>
+        </div>
+  
+        <!-- Not available -->
+        <div class="nw-panel" data-panel="unavailable" hidden>
+          <div class="nw-empty" id="nwEmpty-unavailable">
+            <div class="nw-empty-icon"><i class="fas fa-user-slash"></i></div>
+            <h2>No availability news</h2>
+            <p>Player availability updates will show here when admin posts them.</p>
+          </div>
+          <div class="nw-list" id="nwList-unavailable" hidden></div>
+        </div>
+      </main>
+  </div>
+
+  <nav class="mobile-footer" aria-label="Mobile navigation">
+    <a href="squad.html" class="mf-item"><i class="fas fa-users"></i><span>Squad</span></a>
+    <a href="fixtures.html" class="mf-item"><i class="fas fa-calendar-alt"></i><span>Fixtures</span></a>
+    <div class="mf-item mf-home active">
+      <a href="dashboard.html" class="mf-home-btn" aria-label="Home"><i class="fas fa-home"></i></a>
+      <span>Home</span>
+    </div>
+    <a href="settings.html" class="mf-item"><i class="fas fa-cog"></i><span>Settings</span></a>
+    <button type="button" class="mf-item" id="menuOpenBtn" aria-label="Open menu">
+      <i class="fas fa-bars"></i><span>Menu</span>
+    </button>
+  </nav>
+
+  <div class="menu-modal" id="menuModal" aria-hidden="true">
+    <div class="menu-backdrop" id="menuBackdrop"></div>
+    <div class="menu-drawer">
+      <div class="menu-handle"></div>
+      <p class="menu-drawer-title">DIRECTIVES</p>
+      <div class="menu-grid">
+        <a href="dashboard.html"><i class="fas fa-home"></i>Home</a>
+        <a href="squad.html"><i class="fas fa-users"></i>Squad</a>
+        <a href="fixtures.html"><i class="fas fa-calendar-alt"></i>Fixtures</a>
+        <a href="matches.html"><i class="fas fa-futbol"></i>Matches</a>
+        <a href="live.html"><i class="fas fa-broadcast-tower"></i>Live</a>
+        <a href="goals.html"><i class="fas fa-chart-line"></i>Goals & Assists</a>
+        <a href="news.html"><i class="fas fa-newspaper"></i>News</a>
+        <a href="datv.html"><i class="fas fa-tv"></i>DATV</a>
+        <a href="prediction.html"><i class="fas fa-bullseye"></i>Predictions</a>
+        <a href="training.html"><i class="fas fa-dumbbell"></i>Training</a>
+        <a href="gallery.html"><i class="fas fa-images"></i>Gallery</a>
+        <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+        <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+        <a href="admin.html"><i class="fas fa-shield-alt"></i>Admin</a>
+      </div>
+      <button type="button" class="menu-close" id="menuCloseBtn">Close</button>
+    </div>
+  </div>
+
+  <script src="/scripts/app.js"></script>
+  <script src="/scripts/news.js"></script>
+</body>
+</html>

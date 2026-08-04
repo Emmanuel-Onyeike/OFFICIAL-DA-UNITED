@@ -1,0 +1,228 @@
+/* Admin panel (after PIN) */
+
+.ad-tabs {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.4rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin-bottom: 1.15rem;
+  }
+  
+  .ad-tabs::-webkit-scrollbar { display: none; }
+  
+  .ad-tab {
+    flex: 0 0 auto;
+    padding: 0.5rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #11141a;
+    color: #a1a1aa;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  
+  .ad-tab.is-active {
+    background: #10b981;
+    border-color: #10b981;
+    color: #0a0c10;
+  }
+  
+  .ad-panel[hidden] { display: none !important; }
+  
+  .ad-card {
+    background: #11141a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.1rem;
+    padding: 1.1rem 1rem 1.2rem;
+    margin-bottom: 0.85rem;
+  }
+  
+  .ad-card h3 {
+    margin: 0 0 0.85rem;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  
+  .ad-card h3 i { color: #34d399; font-size: 0.85rem; }
+  
+  .ad-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+  
+  @media (min-width: 640px) {
+    .ad-grid.two { grid-template-columns: 1fr 1fr; }
+  }
+  
+  .ad-field label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #a1a1aa;
+    margin-bottom: 0.3rem;
+  }
+  
+  .ad-input,
+  .ad-select,
+  .ad-textarea {
+    width: 100%;
+    background: #0a0c10;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 0.65rem;
+    padding: 0.65rem 0.75rem;
+    color: #fff;
+    font-size: 0.85rem;
+    font-family: inherit;
+    outline: none;
+  }
+  
+  .ad-textarea {
+    min-height: 4.5rem;
+    resize: vertical;
+  }
+  
+  .ad-input:focus,
+  .ad-select:focus,
+  .ad-textarea:focus {
+    border-color: #10b981;
+  }
+  
+  .ad-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.7rem 1rem;
+    border: none;
+    border-radius: 0.75rem;
+    background: #10b981;
+    color: #0a0c10;
+    font-size: 0.85rem;
+    font-weight: 800;
+    font-family: inherit;
+    cursor: pointer;
+    margin-top: 0.35rem;
+  }
+  
+  .ad-btn:hover { background: #34d399; }
+  
+  .ad-btn.ghost {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #e4e4e7;
+  }
+  
+  .ad-btn.danger {
+    background: transparent;
+    border: 1px solid rgba(248, 113, 113, 0.4);
+    color: #f87171;
+  }
+  
+  .ad-btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .ad-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.85rem;
+  }
+  
+  .ad-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.65rem;
+    padding: 0.7rem 0.75rem;
+    background: #0a0c10;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 0.75rem;
+    font-size: 0.8rem;
+    color: #d4d4d8;
+  }
+  
+  .ad-item-main {
+    min-width: 0;
+    flex: 1;
+    font-weight: 700;
+    color: #fff;
+  }
+  
+  .ad-item-sub {
+    font-size: 0.7rem;
+    color: #71717a;
+    font-weight: 500;
+    margin-top: 0.15rem;
+  }
+  
+  .ad-item-actions {
+    display: flex;
+    gap: 0.35rem;
+    flex-shrink: 0;
+  }
+  
+  .ad-icon-btn {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #11141a;
+    color: #a1a1aa;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+  }
+  
+  .ad-icon-btn:hover { color: #34d399; border-color: rgba(16, 185, 129, 0.4); }
+  .ad-icon-btn.danger:hover { color: #f87171; border-color: rgba(248, 113, 113, 0.4); }
+  
+  .ad-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 5.5rem;
+    transform: translateX(-50%) translateY(1rem);
+    z-index: 120;
+    background: #11141a;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: #34d399;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.75rem 1.15rem;
+    border-radius: 0.85rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  
+  @media (min-width: 1024px) {
+    .ad-toast { bottom: 2rem; }
+  }
+  
+  .ad-toast.is-show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  
+  .ad-hint {
+    font-size: 0.75rem;
+    color: #71717a;
+    margin: 0 0 0.75rem;
+    line-height: 1.45;
+  }
+  

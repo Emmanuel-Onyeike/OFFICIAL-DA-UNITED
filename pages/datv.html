@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home · DA United</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/app.css">
+  <link rel="stylesheet" href="/css/datv.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../script/supabase-client.js"></script>
+</head>
+<body class="app-body">
+  <aside class="app-sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-logo">
+        <img src="../img/logo.png" alt="DA United"
+          onerror="this.style.display='none'; this.nextElementSibling.classList.add('is-visible');">
+        <span class="sidebar-brand-fallback">DA</span>
+      </div>
+      <div>
+        <div class="sidebar-brand-text">DA United</div>
+        <div class="sidebar-brand-sub">Official app</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">Main</div>
+      <a href="dashboard.html" ><i class="fas fa-home"></i> Home</a>
+      <a href="squad.html" ><i class="fas fa-users"></i> Squad</a>
+      <a href="fixtures.html" ><i class="fas fa-calendar-alt"></i> Fixtures</a>
+      <a href="matches.html" ><i class="fas fa-futbol"></i> Matches</a>
+      <a href="live.html" ><i class="fas fa-broadcast-tower"></i> Live</a>
+      <a href="goals.html" ><i class="fas fa-chart-line"></i> Goals & Assists</a>     
+      <a href="news.html" ><i class="fas fa-newspaper"></i> News</a>
+      <a href="datv.html" class="active"><i class="fas fa-tv"></i> DATV</a>
+      <a href="prediction.html"><i class="fas fa-bullseye"></i> Predictions</a>
+      <a href="training.html"><i class="fas fa-dumbbell"></i> Training</a>
+      <a href="gallery.html"><i class="fas fa-images"></i> Gallery</a>
+      <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+      <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+      <a href="admin.html"><i class="fas fa-shield-alt"></i> Admin</a>
+    </nav>
+    <div class="sidebar-foot">
+      <a href="welcome.html"><i class="fas fa-sign-out-alt"></i> Exit</a>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="app-topbar">
+      <div>
+        <h1 class="app-topbar-title">DATV</h1>
+        <div class="app-topbar-sub">DA United overview</div>
+      </div>
+    </header>
+
+    <main class="app-content">
+        <!-- Player -->
+        <div class="dtv-hero">
+          <div class="dtv-player-wrap">
+            <div class="dtv-player-empty" id="dtvPlayerEmpty">
+              <i class="fas fa-tv"></i>
+              <div>
+                <strong>No live stream right now</strong>
+                <p>When admin starts a match stream, it will play here on your phone, tablet, or PC.</p>
+              </div>
+            </div>
+            <iframe
+              id="dtvPlayerFrame"
+              title="DA United live stream"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+              allowfullscreen
+              hidden
+            ></iframe>
+          </div>
+          <div class="dtv-live-bar" id="dtvLiveBar" hidden>
+            <span class="dtv-live-badge">Live</span>
+            <span class="dtv-stream-title" id="dtvStreamTitle">Match stream</span>
+            <span class="dtv-stream-meta" id="dtvStreamMeta"></span>
+          </div>
+        </div>
+  
+        <!-- Watch anywhere -->
+        <p class="dtv-section-title">Watch from anywhere</p>
+        <div class="dtv-info">
+          <div class="dtv-info-card">
+            <i class="fas fa-mobile-alt"></i>
+            <div>
+              <h3>Any device</h3>
+              <p>Phone, tablet, or computer — open DATV and watch the stream.</p>
+            </div>
+          </div>
+          <div class="dtv-info-card">
+            <i class="fas fa-globe"></i>
+            <div>
+              <h3>Any location</h3>
+              <p>Follow the match live wherever you are, as long as you have internet.</p>
+            </div>
+          </div>
+          <div class="dtv-info-card">
+            <i class="fas fa-broadcast-tower"></i>
+            <div>
+              <h3>Official stream</h3>
+              <p>Streams are started by club admin for match days and special events.</p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Upcoming -->
+        <p class="dtv-section-title">Upcoming streams</p>
+        <div class="dtv-upcoming-empty" id="dtvUpcomingEmpty">
+          <i class="fas fa-calendar-alt"></i>
+          <span>No upcoming streams scheduled yet.</span>
+        </div>
+        <div class="dtv-upcoming-list" id="dtvUpcomingList" hidden></div>
+      </main>
+  </div>
+
+  <nav class="mobile-footer" aria-label="Mobile navigation">
+    <a href="squad.html" class="mf-item"><i class="fas fa-users"></i><span>Squad</span></a>
+    <a href="fixtures.html" class="mf-item"><i class="fas fa-calendar-alt"></i><span>Fixtures</span></a>
+    <div class="mf-item mf-home active">
+      <a href="dashboard.html" class="mf-home-btn" aria-label="Home"><i class="fas fa-home"></i></a>
+      <span>Home</span>
+    </div>
+    <a href="settings.html" class="mf-item"><i class="fas fa-cog"></i><span>Settings</span></a>
+    <button type="button" class="mf-item" id="menuOpenBtn" aria-label="Open menu">
+      <i class="fas fa-bars"></i><span>Menu</span>
+    </button>
+  </nav>
+
+  <div class="menu-modal" id="menuModal" aria-hidden="true">
+    <div class="menu-backdrop" id="menuBackdrop"></div>
+    <div class="menu-drawer">
+      <div class="menu-handle"></div>
+      <p class="menu-drawer-title">DIRECTIVES</p>
+      <div class="menu-grid">
+        <a href="dashboard.html"><i class="fas fa-home"></i>Home</a>
+        <a href="squad.html"><i class="fas fa-users"></i>Squad</a>
+        <a href="fixtures.html"><i class="fas fa-calendar-alt"></i>Fixtures</a>
+        <a href="matches.html"><i class="fas fa-futbol"></i>Matches</a>
+        <a href="live.html"><i class="fas fa-broadcast-tower"></i>Live</a>
+        <a href="goals.html"><i class="fas fa-chart-line"></i>Goals & Assists</a>
+        <a href="news.html"><i class="fas fa-newspaper"></i>News</a>
+        <a href="datv.html"><i class="fas fa-tv"></i>DATV</a>
+        <a href="prediction.html"><i class="fas fa-bullseye"></i>Predictions</a>
+        <a href="training.html"><i class="fas fa-dumbbell"></i>Training</a>
+        <a href="gallery.html"><i class="fas fa-images"></i>Gallery</a>
+        <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+        <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+        <a href="admin.html"><i class="fas fa-shield-alt"></i>Admin</a>
+      </div>
+      <button type="button" class="menu-close" id="menuCloseBtn">Close</button>
+    </div>
+  </div>
+
+  <script src="/scripts/app.js"></script>
+  <script src="/scripts/datv.js"></script>
+</body>
+</html>

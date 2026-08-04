@@ -1,0 +1,132 @@
+.st-card {
+    background: #11141a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.15rem;
+    padding: 0.35rem 0;
+    margin-bottom: 0.9rem;
+    overflow: hidden;
+  }
+  
+  .st-card-title {
+    margin: 0;
+    padding: 0.85rem 1.1rem 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #71717a;
+  }
+  
+  .st-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.85rem;
+    padding: 0.9rem 1.1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .st-row-text { min-width: 0; flex: 1; }
+  
+  .st-row-label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  
+  .st-row-desc {
+    font-size: 0.75rem;
+    color: #71717a;
+    margin-top: 0.2rem;
+    line-height: 1.4;
+  }
+  
+  .st-toggle {
+    position: relative;
+    width: 2.75rem;
+    height: 1.55rem;
+    flex-shrink: 0;
+    border-radius: 999px;
+    border: none;
+    background: #3f3f46;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .st-toggle.is-on { background: #10b981; }
+  
+  .st-toggle-knob {
+    position: absolute;
+    top: 0.2rem;
+    left: 0.2rem;
+    width: 1.15rem;
+    height: 1.15rem;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform 0.2s;
+    pointer-events: none;
+  }
+  
+  .st-toggle.is-on .st-toggle-knob {
+    transform: translateX(1.2rem);
+  }
+  
+  .st-btn {
+    flex-shrink: 0;
+    padding: 0.45rem 0.85rem;
+    border-radius: 0.65rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #0a0c10;
+    color: #e4e4e7;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  
+  .st-btn:hover {
+    border-color: rgba(16, 185, 129, 0.4);
+    color: #34d399;
+  }
+  
+  .st-btn.danger {
+    border-color: rgba(248, 113, 113, 0.35);
+    color: #f87171;
+  }
+  
+  .st-about {
+    padding: 1rem 1.1rem 1.15rem;
+    font-size: 0.8rem;
+    color: #a1a1aa;
+    line-height: 1.5;
+  }
+  
+  .st-about strong { color: #fff; }
+  
+  .st-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 5.5rem;
+    transform: translateX(-50%) translateY(1rem);
+    z-index: 70;
+    background: #11141a;
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    color: #34d399;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.75rem 1.15rem;
+    border-radius: 0.85rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+    white-space: nowrap;
+  }
+  
+  @media (min-width: 1024px) {
+    .st-toast { bottom: 2rem; }
+  }
+  
+  .st-toast.is-show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }

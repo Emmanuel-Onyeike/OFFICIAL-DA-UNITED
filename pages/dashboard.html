@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home · DA United</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/app.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../script/supabase-client.js"></script>
+</head>
+<body class="app-body">
+  <aside class="app-sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-logo">
+        <img src="../img/logo.png" alt="DA United"
+          onerror="this.style.display='none'; this.nextElementSibling.classList.add('is-visible');">
+        <span class="sidebar-brand-fallback">DA</span>
+      </div>
+      <div>
+        <div class="sidebar-brand-text">DA United</div>
+        <div class="sidebar-brand-sub">Official app</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">Main</div>
+      <a href="dashboard.html" class="active"><i class="fas fa-home"></i> Home</a>
+      <a href="squad.html"><i class="fas fa-users"></i> Squad</a>
+      <a href="fixtures.html"><i class="fas fa-calendar-alt"></i> Fixtures</a>
+      <a href="matches.html"><i class="fas fa-futbol"></i> Matches</a>
+      <a href="live.html"><i class="fas fa-broadcast-tower"></i> Live</a>
+      <a href="goals.html"><i class="fas fa-chart-line"></i> Goals & Assists</a>
+      <a href="news.html"><i class="fas fa-newspaper"></i> News</a>
+      <a href="datv.html"><i class="fas fa-tv"></i> DATV</a>
+      <a href="prediction.html"><i class="fas fa-bullseye"></i> Predictions</a>
+      <a href="training.html"><i class="fas fa-dumbbell"></i> Training</a>
+      <a href="gallery.html"><i class="fas fa-images"></i> Gallery</a>
+      <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+      <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+      <a href="admin.html"><i class="fas fa-shield-alt"></i> Admin</a>
+    </nav>
+    <div class="sidebar-foot">
+      <a href="welcome.html"><i class="fas fa-sign-out-alt"></i> Exit</a>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="app-topbar">
+        <div>
+          <h1 class="app-topbar-title" id="dashGreeting">Home</h1>
+          <div class="app-topbar-sub">DA United overview</div>
+        </div>
+      </header>
+
+    <main class="app-content">
+      <div class="dash-nav-wrap">
+        <nav class="dash-nav" id="dashNav" aria-label="Home sections">
+          <button type="button" class="dash-nav-btn is-active" data-tab="foryou">
+            <i class="fas fa-star"></i> For You
+          </button>
+          <button type="button" class="dash-nav-btn" data-tab="explore">
+            <i class="fas fa-compass"></i> Explore
+          </button>
+          <button type="button" class="dash-nav-btn" data-tab="news">
+            <i class="fas fa-newspaper"></i> News
+          </button>
+          <button type="button" class="dash-nav-btn" data-tab="men">
+            <i class="fas fa-shirt"></i> Men's Team
+          </button>
+        </nav>
+      </div>
+
+      <div class="dash-panels">
+        <section class="dash-panel is-active" id="panel-foryou" data-panel="foryou">
+          <div class="fy-wrap" id="fyWrap">
+            <div class="fy-empty" id="fyEmpty">
+              <i class="fas fa-newspaper"></i>
+              <div>
+                <strong>Nothing for you yet</strong>
+                <p>Posts from admin will appear here as image cards you can swipe and read.</p>
+              </div>
+            </div>
+            <div class="fy-track" id="fyTrack" hidden></div>
+            <div class="fy-dots" id="fyDots" hidden></div>
+          </div>
+
+          <div class="fy-modal" id="fyModal" aria-hidden="true">
+            <div class="fy-modal-backdrop" id="fyModalBackdrop"></div>
+            <div class="fy-modal-box" role="dialog" aria-modal="true">
+              <button type="button" class="fy-modal-close" id="fyModalClose" aria-label="Close">
+                <i class="fas fa-times"></i>
+              </button>
+              <img class="fy-modal-img" id="fyModalImg" src="" alt="">
+              <div class="fy-modal-body">
+                <div class="fy-modal-meta" id="fyModalMeta"></div>
+                <h2 class="fy-modal-title" id="fyModalTitle"></h2>
+                <p class="fy-modal-text" id="fyModalText"></p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="dash-panel" id="panel-explore" data-panel="explore" hidden>
+          <div class="dash-card">
+            <div class="dash-card-head"><h2>Explore</h2></div>
+            <p class="dash-lead">Discover squad, fixtures, DATV, predictions, and more from one place.</p>
+            <div class="dash-explore-grid">
+              <a href="squad.html" class="dash-explore-item"><i class="fas fa-users"></i> Squad</a>
+              <a href="fixtures.html" class="dash-explore-item"><i class="fas fa-calendar-alt"></i> Fixtures</a>
+              <a href="live.html" class="dash-explore-item"><i class="fas fa-broadcast-tower"></i> Live</a>
+              <a href="datv.html" class="dash-explore-item"><i class="fas fa-tv"></i> DATV</a>
+              <a href="prediction.html" class="dash-explore-item"><i class="fas fa-bullseye"></i> Predictions</a>
+              <a href="gallery.html" class="dash-explore-item"><i class="fas fa-images"></i> Gallery</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="dash-panel" id="panel-news" data-panel="news" hidden>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <h2>News</h2>
+              <a href="news.html" class="dash-link">See all</a>
+            </div>
+            <p class="dash-lead">Latest DA United announcements and match reports.</p>
+            <div class="dash-placeholder">
+              <i class="fas fa-newspaper"></i>
+              <span>No news published yet.</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="dash-panel" id="panel-men" data-panel="men" hidden>
+          <div class="dash-card">
+            <div class="dash-card-head"><h2>Men's Team</h2></div>
+            <p class="dash-lead">First-team focus — form, next fixture, and key players will live here.</p>
+            <div class="dash-placeholder">
+              <i class="fas fa-shirt"></i>
+              <span>Men's team module under construction.</span>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="fx-summary" id="fxSummary">
+        <h2 class="fx-summary-title">Fixture Summary</h2>
+        <div class="fx-team-tabs" id="fxTeamTabs" role="tablist">
+          <button type="button" class="fx-team-tab is-active" data-team="men">Men</button>
+          <button type="button" class="fx-team-tab" data-team="women">Women</button>
+          <button type="button" class="fx-team-tab" data-team="u21">Men U21s</button>
+          <button type="button" class="fx-team-tab" data-team="u18">Men U18s</button>
+        </div>
+        <div class="fx-summary-body" id="fxSummaryBody">
+          <div class="fx-empty" id="fxEmpty">
+            <i class="fas fa-calendar-alt"></i>
+            <p>No fixtures yet. Results and upcoming matches will show here when admin adds them.</p>
+          </div>
+          <div class="fx-pair" id="fxPair" hidden>
+            <div class="fx-col" id="fxLast"></div>
+            <div class="fx-divider"></div>
+            <div class="fx-col" id="fxNext"></div>
+          </div>
+        </div>
+        <div class="fx-summary-actions">
+          <a href="matches.html" class="fx-action-btn">Results</a>
+          <a href="fixtures.html" class="fx-action-btn">Fixtures</a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <nav class="mobile-footer" aria-label="Mobile navigation">
+    <a href="squad.html" class="mf-item"><i class="fas fa-users"></i><span>Squad</span></a>
+    <a href="fixtures.html" class="mf-item"><i class="fas fa-calendar-alt"></i><span>Fixtures</span></a>
+    <div class="mf-item mf-home active">
+      <a href="dashboard.html" class="mf-home-btn" aria-label="Home"><i class="fas fa-home"></i></a>
+      <span>Home</span>
+    </div>
+    <a href="settings.html" class="mf-item"><i class="fas fa-cog"></i><span>Settings</span></a>
+    <button type="button" class="mf-item" id="menuOpenBtn" aria-label="Open menu">
+      <i class="fas fa-bars"></i><span>Menu</span>
+    </button>
+  </nav>
+
+  <div class="menu-modal" id="menuModal" aria-hidden="true">
+    <div class="menu-backdrop" id="menuBackdrop"></div>
+    <div class="menu-drawer">
+      <div class="menu-handle"></div>
+      <p class="menu-drawer-title">DIRECTIVES</p>
+      <div class="menu-grid">
+        <a href="dashboard.html"><i class="fas fa-home"></i>Home</a>
+        <a href="squad.html"><i class="fas fa-users"></i>Squad</a>
+        <a href="fixtures.html"><i class="fas fa-calendar-alt"></i>Fixtures</a>
+        <a href="matches.html"><i class="fas fa-futbol"></i>Matches</a>
+        <a href="live.html"><i class="fas fa-broadcast-tower"></i>Live</a>
+        <a href="goals.html"><i class="fas fa-chart-line"></i>Goals & Assists</a>
+        <a href="news.html"><i class="fas fa-newspaper"></i>News</a>
+        <a href="datv.html"><i class="fas fa-tv"></i>DATV</a>
+        <a href="prediction.html"><i class="fas fa-bullseye"></i>Predictions</a>
+        <a href="training.html"><i class="fas fa-dumbbell"></i>Training</a>
+        <a href="gallery.html"><i class="fas fa-images"></i>Gallery</a>
+        <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+        <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+        <a href="admin.html"><i class="fas fa-shield-alt"></i>Admin</a>
+      </div>
+      <button type="button" class="menu-close" id="menuCloseBtn">Close</button>
+    </div>
+  </div>
+
+  <script src="../script/app.js"></script>
+  <script src="../script/dashboard.js"></script>
+</body>
+</html>

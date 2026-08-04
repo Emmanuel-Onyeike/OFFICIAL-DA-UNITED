@@ -1,0 +1,137 @@
+/* Splash / loading screen */
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+  body.splash-body {
+    min-height: 100vh;
+    background: #0a0c10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+  
+  .splash-glow {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(34, 197, 94, 0.08) 0%, transparent 60%);
+  }
+  
+  .splash-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0 1.5rem;
+  }
+  
+  .splash-ring {
+    position: absolute;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    animation: ringPulse 2.2s ease-in-out infinite;
+  }
+  
+  @media (min-width: 640px) {
+    .splash-ring {
+      width: 12rem;
+      height: 12rem;
+    }
+  }
+  
+  .splash-logo-box {
+    position: relative;
+    z-index: 10;
+    width: 7rem;
+    height: 7rem;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    background: #11141a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px -12px rgba(6, 78, 59, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: logoIn 5s ease-in-out forwards;
+  }
+  
+  @media (min-width: 640px) {
+    .splash-logo-box {
+      width: 9rem;
+      height: 9rem;
+    }
+  }
+  
+  .splash-logo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .splash-fallback {
+    display: none;
+    color: #34d399;
+    font-weight: 900;
+    font-size: 1.875rem;
+    letter-spacing: -0.05em;
+  }
+  
+  .splash-fallback.is-visible {
+    display: block;
+  }
+  
+  .splash-label {
+    animation: logoIn 5s ease-in-out forwards;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #71717a;
+    font-weight: 600;
+  }
+  
+  @media (min-width: 640px) {
+    .splash-label {
+      font-size: 0.75rem;
+    }
+  }
+  
+  @keyframes logoIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.88);
+      filter: blur(8px);
+    }
+    40% {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0);
+    }
+    85% {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.04);
+      filter: blur(4px);
+    }
+  }
+  
+  @keyframes ringPulse {
+    0%, 100% {
+      opacity: 0.25;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.55;
+      transform: scale(1.08);
+    }
+  }

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create account</title>
+  <link rel="stylesheet" href="../css/auth.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../script/supabase-client.js"></script>
+</head>
+<body class="auth-body">
+  <div class="auth-shell">
+    <section class="auth-form-panel">
+      <a href="welcome.html" class="auth-back">← Back</a>
+
+      <div class="auth-visual-mobile">
+        <img src="../img/auth-side.jpg" alt="" onerror="this.src='../img/logo.png'">
+        <div class="auth-visual-mobile-overlay"></div>
+      </div>
+
+      <div class="auth-form-inner">
+        <div class="auth-brand">
+          <div class="auth-brand-logo">
+            <img src="../img/logo.png" alt="Club logo"
+              onerror="this.style.display='none'; this.nextElementSibling.classList.add('is-visible');">
+            <span class="auth-brand-fallback">FC</span>
+          </div>
+          <div>
+            <div class="auth-brand-name">Club Portal</div>
+            <div class="auth-brand-tag">Join the team</div>
+          </div>
+        </div>
+
+        <h1 class="auth-heading">Create account</h1>
+        <p class="auth-sub">Register to join the club portal. You can update your profile later.</p>
+
+        <form id="registerForm" class="auth-form" novalidate>
+          <div class="auth-field">
+            <label class="auth-label" for="regName">Full name</label>
+            <input class="auth-input" id="regName" name="name" type="text" autocomplete="name" placeholder="Your full name" required>
+          </div>
+
+          <div class="auth-field">
+            <label class="auth-label" for="regEmail">Email</label>
+            <input class="auth-input" id="regEmail" name="email" type="email" autocomplete="email" placeholder="you@email.com" required>
+          </div>
+
+          <div class="auth-field">
+            <label class="auth-label" for="regPassword">Password</label>
+            <input class="auth-input" id="regPassword" name="password" type="password" autocomplete="new-password" placeholder="At least 6 characters" required minlength="6">
+          </div>
+
+          <div class="auth-field">
+            <label class="auth-label" for="regConfirm">Confirm password</label>
+            <input class="auth-input" id="regConfirm" name="confirm" type="password" autocomplete="new-password" placeholder="Repeat password" required minlength="6">
+          </div>
+
+          <label class="auth-check">
+            <input type="checkbox" id="regTerms" name="terms" required>
+            I agree to the club portal rules
+          </label>
+
+          <p id="registerMsg" class="auth-msg" role="status"></p>
+          <button type="submit" class="auth-submit" id="registerBtn">Create account</button>
+        </form>
+
+        <p class="auth-footer-line">
+          Already have an account? <a href="login.html">Log in</a>
+        </p>
+      </div>
+    </section>
+
+    <aside class="auth-visual" aria-hidden="true">
+      <img class="auth-visual-img" src="/img/LOGO.PNG" alt="" onerror="this.style.display='none'">
+      <div class="auth-visual-overlay"></div>
+      <div class="auth-visual-content">
+        <span class="auth-visual-badge">New season</span>
+        <h2 class="auth-visual-title">Join the squad online.</h2>
+        <p class="auth-visual-text">
+          Players, staff, and supporters — one official space for the club.
+        </p>
+      </div>
+    </aside>
+  </div>
+
+  <script src="../script/register.js"></script>
+</body>
+</html>

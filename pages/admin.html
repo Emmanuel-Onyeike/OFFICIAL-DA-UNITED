@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin · DA United</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/app.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="/css/admin-panel.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../script/supabase-client.js"></script>
+</head>
+<body class="app-body">
+
+  <div id="pinGate" class="pin-gate">
+    <div class="pin-card">
+      <div class="pin-icon"><i class="fas fa-shield-alt"></i></div>
+      <h1 class="pin-title">DA United Admin</h1>
+      <p class="pin-sub">Enter PIN to continue</p>
+      <input id="pinInput" class="pin-input" type="password" inputmode="numeric" maxlength="8" placeholder="••••••" autocomplete="off">
+      <p id="pinError" class="pin-error" role="status"></p>
+      <button type="button" id="pinSubmit" class="pin-btn">Unlock</button>
+      <a href="dashboard.html" class="pin-back">← Back to app</a>
+    </div>
+  </div>
+
+  <div id="adminApp" class="admin-app is-locked">
+    <aside class="app-sidebar">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-logo">
+          <img src="../img/logo.png" alt="DA United"
+            onerror="this.style.display='none'; this.nextElementSibling.classList.add('is-visible');">
+          <span class="sidebar-brand-fallback">DA</span>
+        </div>
+        <div>
+          <div class="sidebar-brand-text">DA United</div>
+          <div class="sidebar-brand-sub">Official app</div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-section">Main</div>
+        <a href="dashboard.html"><i class="fas fa-home"></i> Home</a>
+        <a href="squad.html"><i class="fas fa-users"></i> Squad</a>
+        <a href="fixtures.html"><i class="fas fa-calendar-alt"></i> Fixtures</a>
+        <a href="matches.html"><i class="fas fa-futbol"></i> Matches</a>
+        <a href="live.html"><i class="fas fa-broadcast-tower"></i> Live</a>
+        <a href="goals.html"><i class="fas fa-chart-line"></i> Goals & Assists</a>
+        <a href="news.html"><i class="fas fa-newspaper"></i> News</a>
+        <a href="datv.html"><i class="fas fa-tv"></i> DATV</a>
+        <a href="prediction.html"><i class="fas fa-bullseye"></i> Predictions</a>
+        <a href="training.html"><i class="fas fa-dumbbell"></i> Training</a>
+        <a href="gallery.html"><i class="fas fa-images"></i> Gallery</a>
+        <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+        <a href="admin.html" class="active"><i class="fas fa-shield-alt"></i> Admin</a>
+      </nav>
+      <div class="sidebar-foot">
+        <a href="#" id="adminLockBtn"><i class="fas fa-lock"></i> Lock admin</a>
+        <a href="welcome.html"><i class="fas fa-sign-out-alt"></i> Exit</a>
+      </div>
+    </aside>
+
+    <div class="app-main">
+      <header class="app-topbar">
+        <div>
+          <h1 class="app-topbar-title">Admin</h1>
+          <div class="app-topbar-sub">Staff controls · DA United</div>
+        </div>
+      </header>
+
+      <main class="app-content">
+        <div class="ad-tabs">
+          <button type="button" class="ad-tab is-active" data-ad="squad">Squad</button>
+          <button type="button" class="ad-tab" data-ad="fixtures">Fixtures</button>
+          <button type="button" class="ad-tab" data-ad="foryou">For You</button>
+          <button type="button" class="ad-tab" data-ad="news">News</button>
+          <button type="button" class="ad-tab" data-ad="datv">DATV</button>
+          <button type="button" class="ad-tab" data-ad="predict">Predict</button>
+          <button type="button" class="ad-tab" data-ad="training">Training</button>
+          <button type="button" class="ad-tab" data-ad="gallery">Gallery</button>
+          <button type="button" class="ad-tab" data-ad="points">Points</button>
+        </div>
+
+        <!-- SQUAD -->
+        <div class="ad-panel" data-ad="squad">
+          <div class="ad-card">
+            <h3><i class="fas fa-users"></i> Add player</h3>
+            <p class="ad-hint">Shows on Squad, Predictions, Goals & Assists, Profile search.</p>
+            <form id="adSquadForm">
+              <div class="ad-grid two">
+                <div class="ad-field"><label>Name</label><input class="ad-input" id="adSqName" required></div>
+                <div class="ad-field"><label>Number</label><input class="ad-input" id="adSqNum" type="number"></div>
+                <div class="ad-field"><label>Position</label>
+                  <select class="ad-select" id="adSqPos"><option>GK</option><option>DEF</option><option>MID</option><option>FWD</option></select>
+                </div>
+                <div class="ad-field"><label>Team</label>
+                  <select class="ad-select" id="adSqTeam"><option value="men">Men</option><option value="women">Women</option><option value="u21">Men U21s</option><option value="u18">Men U18s</option></select>
+                </div>
+                <div class="ad-field"><label>Role</label><input class="ad-input" id="adSqRole" placeholder="Captain, Striker…"></div>
+                <div class="ad-field"><label>Photo URL</label><input class="ad-input" id="adSqPhoto" placeholder="../img/…"></div>
+                <div class="ad-field"><label>Goals</label><input class="ad-input" id="adSqGoals" type="number" min="0" value="0"></div>
+                <div class="ad-field"><label>Assists</label><input class="ad-input" id="adSqAssists" type="number" min="0" value="0"></div>
+              </div>
+              <button type="submit" class="ad-btn">Add player</button>
+            </form>
+            <div class="ad-list" id="adSquadList"></div>
+          </div>
+        </div>
+
+        <!-- FIXTURES -->
+        <div class="ad-panel" data-ad="fixtures" hidden>
+          <div class="ad-card">
+            <h3><i class="fas fa-calendar-alt"></i> Add fixture / result / live</h3>
+            <p class="ad-hint">status: upcoming → Fixtures · result → Matches & Concluded · live → Live page. Also feeds Home Fixture Summary.</p>
+            <form id="adFxForm">
+              <div class="ad-grid two">
+                <div class="ad-field"><label>Team</label>
+                  <select class="ad-select" id="adFxTeam"><option value="men">Men</option><option value="women">Women</option><option value="u21">Men U21s</option><option value="u18">Men U18s</option></select>
+                </div>
+                <div class="ad-field"><label>Status</label>
+                  <select class="ad-select" id="adFxStatus"><option value="upcoming">Upcoming</option><option value="live">Live</option><option value="result">Result</option></select>
+                </div>
+                <div class="ad-field"><label>Opponent</label><input class="ad-input" id="adFxOpp" required></div>
+                <div class="ad-field"><label>Competition</label><input class="ad-input" id="adFxType" placeholder="Friendly, League…"></div>
+                <div class="ad-field"><label>Home / Away</label>
+                  <select class="ad-select" id="adFxHome"><option value="home">Home (H)</option><option value="away">Away (A)</option></select>
+                </div>
+                <div class="ad-field"><label>Date label</label><input class="ad-input" id="adFxDate" placeholder="8 Aug"></div>
+                <div class="ad-field"><label>Time (upcoming)</label><input class="ad-input" id="adFxTime" placeholder="16:00"></div>
+                <div class="ad-field"><label>Score (result/live)</label><input class="ad-input" id="adFxScore" placeholder="2 - 1"></div>
+                <div class="ad-field"><label>Venue</label><input class="ad-input" id="adFxVenue"></div>
+                <div class="ad-field"><label>Opponent logo URL</label><input class="ad-input" id="adFxLogo"></div>
+              </div>
+              <button type="submit" class="ad-btn">Save fixture</button>
+            </form>
+            <div class="ad-list" id="adFxList"></div>
+          </div>
+        </div>
+
+        <!-- FOR YOU -->
+        <div class="ad-panel" data-ad="foryou" hidden>
+          <div class="ad-card">
+            <h3><i class="fas fa-star"></i> For You post</h3>
+            <form id="adFyForm">
+              <div class="ad-grid two">
+                <div class="ad-field"><label>Category</label><input class="ad-input" id="adFyCat" placeholder="MatchCoverage"></div>
+                <div class="ad-field"><label>Date</label><input class="ad-input" id="adFyDate" placeholder="1 Aug 2026"></div>
+              </div>
+              <div class="ad-field"><label>Title</label><input class="ad-input" id="adFyTitle" required></div>
+              <div class="ad-field"><label>Excerpt</label><textarea class="ad-textarea" id="adFyExcerpt"></textarea></div>
+              <div class="ad-field"><label>Full body</label><textarea class="ad-textarea" id="adFyBody"></textarea></div>
+              <div class="ad-field"><label>Image URL</label><input class="ad-input" id="adFyImage"></div>
+              <button type="submit" class="ad-btn">Publish to For You</button>
+            </form>
+            <div class="ad-list" id="adFyList"></div>
+          </div>
+        </div>
+
+        <!-- NEWS -->
+        <div class="ad-panel" data-ad="news" hidden>
+          <div class="ad-card">
+            <h3><i class="fas fa-newspaper"></i> News</h3>
+            <form id="adNewsForm">
+              <div class="ad-grid two">
+                <div class="ad-field"><label>Category</label>
+                  <select class="ad-select" id="adNewsCat">
+                    <option value="transfer">Transfer</option>
+                    <option value="loan">Loan</option>
+                    <option value="injury">Injury</option>
+                    <option value="suspended">Suspended</option>
+                    <option value="unavailable">Not available</option>
+                  </select>
+                </div>
+                <div class="ad-field"><label>Date</label><input class="ad-input" id="adNewsDate"></div>
+              </div>
+              <div class="ad-field"><label>Title</label><input class="ad-input" id="adNewsTitle" required></div>
+              <div class="ad-field"><label>Excerpt</label><textarea class="ad-textarea" id="adNewsExcerpt"></textarea></div>
+              <div class="ad-field"><label>Body</label><textarea class="ad-textarea" id="adNewsBody"></textarea></div>
+              <div class="ad-field"><label>Image URL</label><input class="ad-input" id="adNewsImage"></div>
+              <button type="submit" class="ad-btn">Publish news</button>
+            </form>
+            <div class="ad-list" id="adNewsList"></div>
+          </div>
+        </div>
+
+        <!-- DATV -->
+        <div class="ad-panel" data-ad="datv" hidden>
+          <div class="ad-card">
+            <h3><i class="fas fa-tv"></i> DATV stream</h3>
+            <p class="ad-hint">Set status to live and paste YouTube/Vimeo embed URL for the player.</p>
+            <form id="adStreamForm">
+              <div class="ad-field"><label>Title</label><input class="ad-input" id="adStTitle" required></div>
+              <div class="ad-grid two">
+                <div class="ad-field"><label>Status</label>
+                  <select class="ad-select" id="adStStatus"><option value="live">Live</option><option value="upcoming">Upcoming</option></select>
+                </div>
+                <div class="ad-field"><label>When</label><input class="ad-input" id="adStWhen" placeholder="Kick-off 16:00"></div>
+                <div class="ad-field"><label>Opponent</label><input class="ad-input" id="adStOpp"></div>
+                <div class="ad-field"><label>Venue</label><input class="ad-input" id="adStVenue"></div>
+              </div>
+              <div class="ad-field"><label>Embed URL</label><input class="ad-input" id="adStEmbed" placeholder="https://www.youtube.com/embed/…"></div>
+              <button type="submit" class="ad-btn">Save stream</button>
+            </form>
+            <div class="ad-list" id="adStreamList"></div>
+          </div>
+        </div>
+
+        <!-- PREDICT -->
+        <div class="ad-panel" data-ad="predict" hidden>
+          <div class="ad-card">
+            <h3><i class="fas fa-bullseye"></i> Prediction match</h3>
+            <p class="ad-hint">Only team vs team — players come from Men squad automatically.</p>
+            <div class="ad-item" id="adPredCurrent" style="margin-bottom:0.85rem"></div>
+            <form id="adPredForm">
+              <div class="ad-field"><label>Opponent</label><input class="ad-input" id="adPredAway" required placeholder="Rivals FC"></div>
+              <div class="ad-grid two">
+                <div class="ad-field"><label>Date / time</label><input class="ad-input" id="adPredDate"></div>
+                <div class="ad-field"><label>Venue</label><input class="ad-input" id="adPredVenue"></div>
+              </div>
+              <div class="ad-btn-row">
+                <button type="submit" class="ad-btn">Set match</button>
+                <button type="button" class="ad-btn ghost" id="adPredClear">Clear</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- TRAINING -->
+        <div class="ad-panel" data-ad="training" hidden>
+          <div class="ad-card">
+            <h3><i class="fas fa-dumbbell"></i> Training session</h3>
+            <form id="adTrForm">
+              <div class="ad-field"><label>Title</label><input class="ad-input" id="adTrTitle" required></div>
+              <div class="ad-grid two">
+                <div class="ad-field"><label>Focus</label><input class="ad-input" id="adTrFocus" placeholder="Tactics"></div>
+                <div class="ad-field"><label>Team</label><input class="ad-input" id="adTrTeam" placeholder="Men"></div>
+                <div class="ad-field"><label>Day name</label><input class="ad-input" id="adTrDay" placeholder="Tue"></div>
+                <div class="ad-field"><label>Day number</label><input class="ad-input" id="adTrNum" placeholder="5"></div>
+                <div class="ad-field"><label>Time</label><input class="ad-input" id="adTrTime" placeholder="16:00 – 18:00"></div>
+                <div class="ad-field"><label>Venue</label><input class="ad-input" id="adTrVenue"></div>
+              </div>
+              <div class="ad-field"><label>Notes</label><textarea class="ad-textarea" id="adTrNotes"></textarea></div>
+              <button type="submit" class="ad-btn">Add session</button>
+            </form>
+            <div class="ad-list" id="adTrList"></div>
+          </div>
+        </div>
+
+        <!-- GALLERY -->
+        <div class="ad-panel" data-ad="gallery" hidden>
+          <div class="ad-card">
+            <h3><i class="fas fa-images"></i> Gallery photo</h3>
+            <form id="adGyForm">
+              <div class="ad-field"><label>Image URL</label><input class="ad-input" id="adGySrc" required></div>
+              <div class="ad-grid two">
+                <div class="ad-field"><label>Caption</label><input class="ad-input" id="adGyCap"></div>
+                <div class="ad-field"><label>Category</label>
+                  <select class="ad-select" id="adGyCat">
+                    <option value="matchday">Matchday</option>
+                    <option value="training">Training</option>
+                    <option value="players">Players</option>
+                    <option value="events">Events</option>
+                  </select>
+                </div>
+              </div>
+              <button type="submit" class="ad-btn">Add photo</button>
+            </form>
+            <div class="ad-list" id="adGyList"></div>
+          </div>
+        </div>
+
+        <!-- POINTS -->
+        <div class="ad-panel" data-ad="points" hidden>
+          <div class="ad-card">
+            <h3><i class="fas fa-trophy"></i> Prediction points</h3>
+            <p class="ad-hint">Add points to the user profile total (correct predictions).</p>
+            <div class="ad-field"><label>Points to add</label><input class="ad-input" id="adPtsVal" type="number" value="10"></div>
+            <button type="button" class="ad-btn" id="adPtsAdd">Add points</button>
+          </div>
+        </div>
+
+        <div class="ad-toast" id="adToast"></div>
+      </main>
+    </div>
+
+    <nav class="mobile-footer" aria-label="Mobile navigation">
+      <a href="squad.html" class="mf-item"><i class="fas fa-users"></i><span>Squad</span></a>
+      <a href="fixtures.html" class="mf-item"><i class="fas fa-calendar-alt"></i><span>Fixtures</span></a>
+      <div class="mf-item mf-home">
+        <a href="dashboard.html" class="mf-home-btn" aria-label="Home"><i class="fas fa-home"></i></a>
+        <span>Home</span>
+      </div>
+      <a href="settings.html" class="mf-item"><i class="fas fa-cog"></i><span>Settings</span></a>
+      <button type="button" class="mf-item" id="menuOpenBtn" aria-label="Open menu">
+        <i class="fas fa-bars"></i><span>Menu</span>
+      </button>
+    </nav>
+
+    <div class="menu-modal" id="menuModal" aria-hidden="true">
+      <div class="menu-backdrop" id="menuBackdrop"></div>
+      <div class="menu-drawer">
+        <div class="menu-handle"></div>
+        <p class="menu-drawer-title">All pages</p>
+        <div class="menu-grid">
+          <a href="dashboard.html"><i class="fas fa-home"></i>Home</a>
+          <a href="squad.html"><i class="fas fa-users"></i>Squad</a>
+          <a href="fixtures.html"><i class="fas fa-calendar-alt"></i>Fixtures</a>
+          <a href="matches.html"><i class="fas fa-futbol"></i>Matches</a>
+          <a href="live.html"><i class="fas fa-broadcast-tower"></i>Live</a>
+          <a href="goals.html"><i class="fas fa-chart-line"></i>Goals & Assists</a>
+          <a href="news.html"><i class="fas fa-newspaper"></i>News</a>
+          <a href="datv.html"><i class="fas fa-tv"></i>DATV</a>
+          <a href="prediction.html"><i class="fas fa-bullseye"></i>Predictions</a>
+          <a href="training.html"><i class="fas fa-dumbbell"></i>Training</a>
+          <a href="gallery.html"><i class="fas fa-images"></i>Gallery</a>
+          <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+          <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+          <a href="admin.html"><i class="fas fa-shield-alt"></i>Admin</a>
+        </div>
+        <button type="button" class="menu-close" id="menuCloseBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../script/app.js"></script>
+  <script src="/scripts/admin.js"></script>
+  <script src="/scripts/admin-panel.js"></script>
+</body>
+</html>
