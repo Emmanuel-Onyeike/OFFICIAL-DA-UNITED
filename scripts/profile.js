@@ -1,7 +1,6 @@
 (function () {
     var PROFILE_KEY = 'da_profile';
     var POINTS_KEY = 'da_user_points';
-    var SQUAD_KEY = 'da_squad';
   
     var WORLD_PLAYERS = [
       'Lionel Messi', 'Cristiano Ronaldo', 'Kylian Mbappé', 'Erling Haaland',
@@ -37,28 +36,13 @@
       }
     }
   
-    function saveProfile(p) {
+    function saveProfileLocal(p) {
       localStorage.setItem(PROFILE_KEY, JSON.stringify(p));
     }
   
     function getPoints() {
       var n = Number(localStorage.getItem(POINTS_KEY) || 0);
       return isNaN(n) ? 0 : n;
-    }
-  
-    function getSquad() {
-      try {
-        var raw = localStorage.getItem(SQUAD_KEY);
-        if (!raw) return [];
-        var d = JSON.parse(raw);
-        return Array.isArray(d)
-          ? d.filter(function (p) {
-              return (p.team || 'men') === 'men';
-            })
-          : [];
-      } catch (e) {
-        return [];
-      }
     }
   
     function esc(s) {
@@ -70,24 +54,17 @@
     function renderFav(el, player, emptyText) {
       if (!el) return;
       if (!player || !player.name) {
-        el.innerHTML =
-          '<span class="pf-fav-empty">' + esc(emptyText) + '</span>';
+        el.innerHTML = '<span class="pf-fav-empty">' + esc(emptyText) + '</span>';
         return;
       }
       var av = player.photo
         ? '<img src="' + esc(player.photo) + '" alt="">'
         : esc((player.name || '?').charAt(0).toUpperCase());
       el.innerHTML =
-        '<div class="pf-fav-avatar">' +
-        av +
-        '</div>' +
+        '<div class="pf-fav-avatar">' + av + '</div>' +
         '<div class="pf-fav-info">' +
-        '<div class="pf-fav-name">' +
-        esc(player.name) +
-        '</div>' +
-        (player.sub
-          ? '<div class="pf-fav-sub">' + esc(player.sub) + '</div>'
-          : '') +
+        '<div class="pf-fav-name">' + esc(player.name) + '</div>' +
+        (player.sub ? '<div class="pf-fav-sub">' + esc(player.sub) + '</div>' : '') +
         '</div>';
     }
   
@@ -98,23 +75,55 @@
       if (nameInput) nameInput.value = p.name || '';
       if (bioInput) bioInput.value = p.bio || '';
       if (pointsVal) pointsVal.textContent = String(getPoints());
-      renderFav(
-        worldFav,
-        p.bestWorld,
-        'Search and pick your favourite real-world player'
-      );
-      renderFav(
-        daFav,
-        p.bestDa,
-        'Search and pick your favourite DA United player'
-      );
+      renderFav(worldFav, p.bestWorld, 'Search and pick your favourite real-world player');
+      renderFav(daFav, p.bestDa, 'Search and pick your favourite DA United player');
+    }
+  
+    /** Save name to Auth metadata → dashboard "Hi, Name" reads this */
+    async function syncNameToSupabase(p) {
+      if (!window.sb) return { ok: false, error: 'Supabase not loaded' };
+  
+      var name = (p.name || '').trim();
+      var bio = (p.bio || '').trim();
+  
+      var authRes = await window.sb.auth.updateUser({
+        data: {
+          full_name: name,
+          display_name: name
+        }
+      });
+      if (authRes.error) return { ok: false, error: authRes.error.message };
+  
+      var ses = await window.sb.auth.getSession();
+      var user = ses.data && ses.data.session && ses.data.session.user;
+      if (user) {
+        await window.sb.from('profiles').upsert(
+          {
+            user_id: user.id,
+            name: name,
+            bio: bio,
+            best_world: p.bestWorld || null,
+            best_da: p.bestDa || null,
+            updated_at: new Date().toISOString()
+          },
+          { onConflict: 'user_id' }
+        );
+      }
+      return { ok: true };
+    }
+  
+    async function getSquad() {
+      if (window.sb) {
+        var res = await window.sb.from('squad').select('*').eq('team', 'men');
+        return res.data || [];
+      }
+      return [];
     }
   
     function showResults(box, items, onPick) {
       if (!box) return;
       if (!items.length) {
-        box.innerHTML =
-          '<div class="pf-search-none">No matches — press Enter to use your typed name</div>';
+        box.innerHTML = '<div class="pf-search-none">No matches — press Enter to use your typed name</div>';
         box.classList.add('is-open');
         return;
       }
@@ -136,7 +145,6 @@
   
     function bindWorldSearch() {
       if (!worldSearch || !worldResults) return;
-  
       worldSearch.addEventListener('input', function () {
         var q = worldSearch.value.trim().toLowerCase();
         if (!q) {
@@ -152,29 +160,20 @@
           });
         showResults(worldResults, hits, function (item) {
           var p = loadProfile();
-          p.bestWorld = {
-            id: item.id,
-            name: item.name,
-            sub: 'Favourite player'
-          };
-          saveProfile(p);
+          p.bestWorld = { id: item.id, name: item.name, sub: 'Favourite player' };
+          saveProfileLocal(p);
           worldSearch.value = '';
           renderHeader(p);
         });
       });
-  
       worldSearch.addEventListener('keydown', function (e) {
         if (e.key === 'Enter') {
           e.preventDefault();
           var name = worldSearch.value.trim();
           if (!name) return;
           var p = loadProfile();
-          p.bestWorld = {
-            id: name,
-            name: name,
-            sub: 'Favourite player'
-          };
-          saveProfile(p);
+          p.bestWorld = { id: name, name: name, sub: 'Favourite player' };
+          saveProfileLocal(p);
           worldSearch.value = '';
           worldResults.classList.remove('is-open');
           renderHeader(p);
@@ -184,14 +183,13 @@
   
     function bindDaSearch() {
       if (!daSearch || !daResults) return;
-  
-      daSearch.addEventListener('input', function () {
+      daSearch.addEventListener('input', async function () {
         var q = daSearch.value.trim().toLowerCase();
         if (!q) {
           daResults.classList.remove('is-open');
           return;
         }
-        var squad = getSquad();
+        var squad = await getSquad();
         var hits = squad
           .filter(function (pl) {
             return String(pl.name || '').toLowerCase().indexOf(q) !== -1;
@@ -205,9 +203,7 @@
             return {
               id: pl.id || pl.name,
               name: pl.name,
-              sub: [pl.pos, pl.number != null ? '#' + pl.number : '']
-                .filter(Boolean)
-                .join(' · '),
+              sub: [pl.pos, pl.number != null ? '#' + pl.number : ''].filter(Boolean).join(' · '),
               photo: pl.photo || '',
               label: label
             };
@@ -220,7 +216,7 @@
             sub: item.sub || 'DA United',
             photo: item.photo || ''
           };
-          saveProfile(p);
+          saveProfileLocal(p);
           daSearch.value = '';
           renderHeader(p);
         });
@@ -228,24 +224,16 @@
     }
   
     document.addEventListener('click', function (e) {
-      if (
-        worldResults &&
-        !worldResults.contains(e.target) &&
-        e.target !== worldSearch
-      ) {
+      if (worldResults && !worldResults.contains(e.target) && e.target !== worldSearch) {
         worldResults.classList.remove('is-open');
       }
-      if (
-        daResults &&
-        !daResults.contains(e.target) &&
-        e.target !== daSearch
-      ) {
+      if (daResults && !daResults.contains(e.target) && e.target !== daSearch) {
         daResults.classList.remove('is-open');
       }
     });
   
     if (saveBtn) {
-      saveBtn.addEventListener('click', function () {
+      saveBtn.addEventListener('click', async function () {
         var p = loadProfile();
         p.name = nameInput ? nameInput.value.trim() : p.name;
         p.bio = bioInput ? bioInput.value.trim() : p.bio;
@@ -257,19 +245,43 @@
           }
           return;
         }
-        saveProfile(p);
+        saveProfileLocal(p);
         renderHeader(p);
+  
+        var sync = await syncNameToSupabase(p);
         if (msg) {
           msg.hidden = false;
-          msg.textContent = 'Profile saved.';
-          msg.classList.remove('error');
+          if (sync.ok) {
+            msg.textContent = 'Profile saved. Dashboard will show: Hi, ' + p.name;
+            msg.classList.remove('error');
+          } else {
+            msg.textContent = 'Saved on this device. Cloud sync: ' + (sync.error || 'failed');
+            msg.classList.add('error');
+          }
         }
       });
     }
   
+    /** Load name from Auth when opening profile */
+    async function boot() {
+      var p = loadProfile();
+      if (window.sb) {
+        try {
+          var ses = await window.sb.auth.getSession();
+          var user = ses.data && ses.data.session && ses.data.session.user;
+          if (user && user.user_metadata) {
+            var n = user.user_metadata.display_name || user.user_metadata.full_name;
+            if (n && !p.name) p.name = n;
+          }
+        } catch (_) {}
+      }
+      saveProfileLocal(p);
+      renderHeader(p);
+    }
+  
     bindWorldSearch();
     bindDaSearch();
-    renderHeader(loadProfile());
+    boot();
     window.DA_refreshProfile = function () {
       renderHeader(loadProfile());
     };
